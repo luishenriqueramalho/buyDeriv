@@ -11,6 +11,7 @@ async function connectWebSocket() {
 
   ws.on("open", async () => {
     console.log("Conexão aberta.");
+    startLogging();
   });
 
   ws.on("message", async (data) => {
@@ -19,11 +20,6 @@ async function connectWebSocket() {
     if (response.error) {
       console.error("Erro WebSocket:", response.error.message);
       return;
-    }
-
-    if (response.msg_type === "authorize") {
-      console.log("Autenticado com sucesso.");
-      console.log("Realizar compra!");
     }
   });
 
@@ -34,6 +30,16 @@ async function connectWebSocket() {
   ws.on("close", () => {
     console.log("Conexão fechada. Tentando reconectar...");
   });
+}
+
+function startLogging() {
+  setInterval(() => {
+    console.log("Foi realizado uma compra.");
+
+    setInterval(() => {
+      console.log("Ordem fechada.");
+    }, 5000);
+  }, 30000);
 }
 
 connectWebSocket();
